@@ -9,7 +9,7 @@ def compute_table(gene):
     '''Compute the KMP table (also known as the partial match or failure function) for the given gene (pattern).'''
     m = len(gene)
     table = [0] * m
-    j = 0  # Length of the previous longest prefix suffix
+    j = 0  
 
     for i in range(1, m):
         while j > 0 and gene[i] != gene[j]:
@@ -29,9 +29,9 @@ def kmp(gene, genome):
     m = len(gene)
     
     table = compute_table(gene)
-    j = 0  # index for gene
+    j = 0  
     
-    for i in range(n):  # index for genome
+    for i in range(n):  
         while j > 0 and genome[i] != gene[j]:
             j = table[j - 1]
         if genome[i] == gene[j]:
@@ -56,7 +56,7 @@ def test_kmp():
     genomes = ["", "a", "catacattaccattacgaccag", "atgcacattatatatatatgcatat", "gggggggaaaaaaaa", "aaa", "taaa"]
 
     for gene in genes:
-        for genome in genomes: # tests every pair of gene and genome.
+        for genome in genomes:
             assert kmp(gene, genome) == (gene in genome), f"Failed for gene: '{gene}' and genome: '{genome}'"
     print("kmp test passed")
 
