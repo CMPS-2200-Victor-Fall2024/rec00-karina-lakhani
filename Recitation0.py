@@ -6,19 +6,22 @@ I wrote the function compute_table, which tells you how much to shift the gene w
 You must complete the algorithm by completing the function, kmp.
 '''
 def compute_table(gene):
-    
-    table = [0] * len(gene)
-    j = 0
-    for i in range(1, len(gene)):
+    '''Compute the KMP table (also known as the partial match or failure function) for the given gene (pattern).'''
+    m = len(gene)
+    table = [0] * m
+    j = 0  # Length of the previous longest prefix suffix
+
+    for i in range(1, m):
         while j > 0 and gene[i] != gene[j]:
             j = table[j - 1]
         if gene[i] == gene[j]:
             j += 1
         table[i] = j
+
     return table
 
 def kmp(gene, genome):
-   
+    '''KMP string matching algorithm.'''
     if not gene:
         return True  
     
@@ -40,9 +43,10 @@ def kmp(gene, genome):
 
 def test_compute_table():
     gene = "abcabcacab"
-    print(compute_table(gene))
-    ideal_answer = [j - i + 1 for j, i in enumerate([0, 1, 1, 0, 1, 1, 0, 5, 0, 1])]
-    assert compute_table(gene) == ideal_answer
+    ideal_answer = [0, 0, 1, 2, 3, 4, 5, 6, 7, 8]
+    result = compute_table(gene)
+    assert result == ideal_answer, f"Expected {ideal_answer}, got {result}"
+    print("compute_table test passed")
 
 def test_kmp():
     '''
@@ -53,7 +57,8 @@ def test_kmp():
 
     for gene in genes:
         for genome in genomes: # tests every pair of gene and genome.
-            assert kmp(gene, genome) == (gene in genome)  # asserts that the kmp function returns the same value as the builtin 'in' function.
+            assert kmp(gene, genome) == (gene in genome), f"Failed for gene: '{gene}' and genome: '{genome}'"
+    print("kmp test passed")
 
 # Run the tests
 test_compute_table()
