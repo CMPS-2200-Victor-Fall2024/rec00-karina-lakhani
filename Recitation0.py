@@ -60,6 +60,6 @@ def test_kmp():
             assert kmp(gene, genome) == (gene in genome), f"Failed for gene: '{gene}' and genome: '{genome}'"
     print("kmp test passed")
 
-# Run the tests
+
 test_compute_table()
 test_kmp()
